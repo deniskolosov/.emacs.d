@@ -19,6 +19,14 @@
 ;; turn on global company mode
 (add-hook 'after-init-hook 'global-company-mode)
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sql . t)))
+
+(defun my-org-confirm-babel-evaluate (lang body)
+  (not (member lang '("sql"))))
+
+(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 
 
 ;; Read and execute all .el files in .emacs.d/subconf
@@ -26,8 +34,9 @@
        (load-it (lambda (f) (load-file (concat (file-name-as-directory stuff-dir) f)))))
       (mapc load-it (directory-files stuff-dir nil "\\el$")))
 
-(menu-bar-mode -1)
+(display-time-mode 1)
 
+ 
 (provide 'init)
 ;; init.el ends here
 (custom-set-variables
@@ -36,10 +45,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(global-display-line-numbers-mode t)
- '(menu-bar-mode nil)
+ '(menu-bar-mode -1)
  '(package-selected-packages
-   '(evil-collection doom-modeline general lsp-mode company flycheck projectile cider smartparens which-key counsel ivy magit evil zenburn-theme all-the-icons use-package))
+   '(lsp-treemacs treemacs-tab-bar treemacs-magit treemacs-projectile treemacs-evil treemacs evil-commentary org-projectile evil-collection doom-modeline general company flycheck projectile cider smartparens which-key counsel ivy magit evil zenburn-theme all-the-icons use-package))
  '(tool-bar-mode nil))
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
